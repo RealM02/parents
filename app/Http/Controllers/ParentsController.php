@@ -13,7 +13,9 @@ class ParentsController extends Controller
     public function index()
     {
         //
-        return view('parents.index');
+        $datos['parents']=Parents::paginate(5);
+
+        return view('parents.index',$datos );
     }
 
     /**
@@ -31,7 +33,10 @@ class ParentsController extends Controller
     public function store(Request $request)
     {
         //
-        $datosParents = request()->all();
+        //$datosParents = request()->all();
+        $datosParents = request()->except('_token');
+        
+        Parents::insert($datosParents);
         return response()->json($datosParents);
     }
 
@@ -46,24 +51,35 @@ class ParentsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Parents $parents)
+    public function edit($id)
     {
         //
+        $parents=Parents::findOrFail($id);
+
+        return view('parents.edit', compact('parents') );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Parents $parents)
+    public function update(Request $request, $id)
     {
         //
+        $datosParents = request()->except('_token','_method');
+        Parents::where('id','=',$id)->update($datosParents);
+        
+        $parents=Parents::findOrFail($id);
+        return view('parents.edit', compact('parents') );
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Parents $parents)
+    public function destroy($id)
     {
         //
+        Parents::destroy($id);
+        return redirect('parents');
     }
 }
