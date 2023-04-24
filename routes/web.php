@@ -26,3 +26,6 @@ Route::get('parents/create',[ParentsController::class,'create']);
 */
 
 Route::resource('parents', ParentsController::class);
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
