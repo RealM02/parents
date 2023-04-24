@@ -33,7 +33,6 @@ class ParentsController extends Controller
         //
         $datosParents = request()->all();
         return response()->json($datosParents);
-        
     }
 
     /**
