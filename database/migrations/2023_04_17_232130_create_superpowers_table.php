@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('parents', function (Blueprint $table) {
+        Schema::create('superpowers', function (Blueprint $table) {
             $table->id();
-
-            $table->string('Name');
-            $table->string('Gender');
-            
+            $table->foreignId('user_id');
+            $table->string('name');
+            $table->longText('description')->nullable();
+            $table->boolean('active');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('parents');
+        Schema::dropIfExists('superpowers');
     }
 };
